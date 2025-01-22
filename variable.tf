@@ -6,3 +6,4 @@ variable "account_replication_type" {}
 variable "tfstate_storage_account" {}
 variable "batch_number" {}
 variable "env" {}
+variable "backup" {}

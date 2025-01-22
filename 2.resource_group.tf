@@ -11,6 +11,6 @@ resource "azurerm_resource_group" "rg1" {
   tags = {
     Batch       = var.batch_number
     Environment = var.env
-    Backup      = "yes"
+    Backup      = var.backup
   }
 }
