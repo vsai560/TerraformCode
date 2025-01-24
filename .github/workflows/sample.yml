@@ -53,9 +53,9 @@ jobs:
       run:
         shell: bash
     steps:
-    - name: Checkout 
-      uses: actions/checkout@v3
-    - name: List Repo Files
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: List Repo Files
         run: |
           ls -al 
           pwd 
