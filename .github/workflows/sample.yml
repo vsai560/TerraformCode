@@ -9,7 +9,7 @@ on:
       - closed
   push:
     branches:
-      - master
+      - [master, devolopment]
 
 env:
   #TERRAFORM_DESTROY = "YES"
