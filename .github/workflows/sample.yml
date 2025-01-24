@@ -3,13 +3,10 @@ name: Workflow For Running Azure Terraform Code
 
 on:
   pull_request:
-    branches:
-      - devolopment
-    types:
-      - closed
+    branches: [devolopment]
+    types: [closed]
   push:
-    branches:
-      - [master, devolopment]
+    branches: [master, devolopment]
 
 env:
   #TERRAFORM_DESTROY = "YES"
