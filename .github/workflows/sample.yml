@@ -1,45 +1,50 @@
 ---
-- name: Workflow For Running Azure Terraform Code
-  on:
-    pull_request:
-      branches: [devolopment]
-      types: [closed]
-  push:
-    branches: [master]
-  env:
-    #TERRAFORM_DESTROY = "YES"
-    ENVIRONMENT: "Devolopment"
-    ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
-    ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
-    ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
-    ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
-    ACTIONS_STEP_DEBUG: true
-    PACKER_PRODUCT_VERSION: 1.8.5
-    TERRAFORM_PRODUCT_VERSION: 1.7.3
+name: Workflow For Running Azure Terraform Code
 
-  jobs:
-    megastar:
-      name: "MEGA JOB"
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          shell: bash
-      steps:
-        - name: Print Runner Hostname
-          run: hostname
-          shell: bash
-        - name: Print Runner IP Address
-          run: curl -sL https://ipconfig.io
-          shell: bash
-        - name: Setup Terraform With Specified Version on the Runner
-          uses: hashicorp/setup-terraform@v2
-          with:
-            terraform_version: ${{ env.TERRAFORM_PRODUCT_VERSION }}
-        - name: Setup `packer`
-          uses: hashicorp/setup-packer@main
-          id: setup
-          with:
-            version: ${{ env.PACKER_PRODUCT_VERSION }}
-        - name: Check Terraform version
-          run: terraform version
-          shell: bash
+on:
+  pull_request:
+    branches:
+      - devolopment
+    types:
+      - closed
+  push:
+    branches:
+      - master
+
+env:
+  #TERRAFORM_DESTROY = "YES"
+  ENVIRONMENT: "Devolopment"
+  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  ACTIONS_STEP_DEBUG: true
+  PACKER_PRODUCT_VERSION: 1.8.5
+  TERRAFORM_PRODUCT_VERSION: 1.7.3
+
+jobs:
+  megastar:
+    name: "MEGA JOB"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Print Runner Hostname
+        run: hostname
+        shell: bash
+      - name: Print Runner IP Address
+        run: curl -sL https://ipconfig.io
+        shell: bash
+      - name: Setup Terraform With Specified Version on the Runner
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TERRAFORM_PRODUCT_VERSION }}
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@main
+        id: setup
+        with:
+          version: ${{ env.PACKER_PRODUCT_VERSION }}
+      - name: Check Terraform version
+        run: terraform version
+        shell: bash
