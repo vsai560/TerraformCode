@@ -34,12 +34,12 @@
        - name: Setup Terraform With Specified Version on the Runner 
          uses: hashicorp/setup-terraform@v2
          with: 
-            terraform_version: ${{ env.PACKER_PRODUCT_VERSION }}
+            terraform_version: ${{ env.TERRAFORM_PRODUCT_VERSION }}
         - name: Setup `packer`
-        uses: hashicorp/setup-packer@main
-        id: setup
-        with:
-          version: ${{ env.PACKER_PRODUCT_VERSION }}
+          uses: hashicorp/setup-packer@main
+          id: setup
+          with:
+            version: ${{ env.PACKER_PRODUCT_VERSION }}
        - name: Check Terraform version
          run: terraform version
          shell: bash 
