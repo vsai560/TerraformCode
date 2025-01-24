@@ -20,8 +20,8 @@ env:
   TERRAFORM_PRODUCT_VERSION: 1.7.3
 
 jobs:
-  megastar:
-    name: "MEGA JOB"
+  tools_check:
+    name: "checking tool status"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -45,3 +45,16 @@ jobs:
       - name: Check Terraform & packer version
         run: terraform version && packer version
         shell: bash
+
+  terraform_init:
+    name: "Files Check & Terraform Init"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+      steps:
+        - name: List Repo Files
+          run: |
+            ls -al 
+            pwd 
+            free
