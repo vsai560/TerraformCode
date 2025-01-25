@@ -85,5 +85,4 @@ jobs:
         id: init
         shell: bash
         run: |
-          #export TF_LOG="TRACE"
           terraform init && terraform plan
