@@ -37,6 +37,8 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ env.TERRAFORM_PRODUCT_VERSION }}
+      - name: Check if Terraform is installed
+        run: terraform --version
       - name: Setup `packer`
         uses: hashicorp/setup-packer@main
         id: setup
