@@ -52,6 +52,7 @@ jobs:
         run: echo $PATH
 
   terraform_init:
+    needs: tools_check
     name: "Files Check & Terraform Init & Validate"
     runs-on: ubuntu-latest
     defaults:
@@ -69,6 +70,4 @@ jobs:
         id: init
         shell: bash
         run: |
-          echo ${{ env.ENVIRONMENT }} 
-          echo ${{ github.event.inputs.TERRAFORM_DESTROY }} 
           terraform init && terraform validate && terraform fmt
