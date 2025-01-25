@@ -66,6 +66,7 @@ jobs:
           ls -al 
           pwd 
           free
+          export TF_LOG="TRACE"
       - name: Perform Terraform Init Validate Format
         id: init
         shell: bash
