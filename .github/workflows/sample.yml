@@ -48,6 +48,9 @@ jobs:
         run: terraform version && packer version
         shell: bash
 
+      - name: Check PATH for Terraform
+        run: echo $PATH
+
   terraform_init:
     name: "Files Check & Terraform Init & Validate"
     runs-on: ubuntu-latest
