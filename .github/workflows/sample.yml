@@ -58,7 +58,6 @@ jobs:
         run: |
           ls -al
           pwd
-          free
       - name: Perform Terraform Init validate Format
         id: init
         shell: bash
