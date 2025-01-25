@@ -6,7 +6,7 @@ resource "random_password" "password1" {
   min_special      = 4
   min_numeric      = 4
   override_special = "!@#$"
-  depends_on       = [azurerm_storage_account.devsecopstfstate12]
+  #depends_on       = [azurerm_storage_account.devsecopstfstate12]
 }
 
 resource "random_password" "password2" {
@@ -17,7 +17,7 @@ resource "random_password" "password2" {
   min_special      = 4
   min_numeric      = 4
   override_special = "!@#$"
-  depends_on       = [random_password.password1]
+  #depends_on       = [random_password.password1]
 }
 
 resource "random_password" "password3" {
@@ -28,5 +28,5 @@ resource "random_password" "password3" {
   min_special      = 4
   min_numeric      = 4
   override_special = "!@#$"
-  depends_on       = [random_password.password2]
+  #depends_on       = [random_password.password2]
 }

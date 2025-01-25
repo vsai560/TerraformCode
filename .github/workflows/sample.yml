@@ -1,27 +1,25 @@
----
 name: Workflow For Running Azure Terraform Code
 
 on:
   pull_request:
-    branches: [devolopment]
+    branches: [development]
     types: [closed]
   push:
-    branches: [master, devolopment]
-
+    branches: [development, master]
 env:
-  #TERRAFORM_DESTROY = "YES"
-  ENVIRONMENT: "Devolopment"
-  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  #TERRAFORM_DESTROY: "YES"
+  ENVIRONMENT: "Development"
+  ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+  ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
   ACTIONS_STEP_DEBUG: true
   PACKER_PRODUCT_VERSION: 1.8.5
-  TERRAFORM_PRODUCT_VERSION: 1.10.5
+  TERRAFORM_PRODUCT_VERSION: 1.7.3
 
 jobs:
   tools_check:
-    name: "checking tool status"
+    name: "Checking Tools Status"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -33,23 +31,18 @@ jobs:
       - name: Print Runner IP Address
         run: curl -sL https://ipconfig.io
         shell: bash
-      - name: Setup Terraform With Specified Version on the Runner
+      - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ env.TERRAFORM_PRODUCT_VERSION }}
-      - name: Check if Terraform is installed
-        run: terraform --version
       - name: Setup `packer`
         uses: hashicorp/setup-packer@main
         id: setup
         with:
           version: ${{ env.PACKER_PRODUCT_VERSION }}
-      - name: Check Terraform & packer version
+      - name: Check Terraform & Packer Version
         run: terraform version && packer version
         shell: bash
-
-      - name: Check PATH for Terraform
-        run: echo $PATH
 
   terraform_init:
     needs: tools_check
@@ -63,12 +56,34 @@ jobs:
         uses: actions/checkout@v3
       - name: List Repo Files
         run: |
-          ls -al 
-          pwd 
+          ls -al
+          pwd
           free
-          export TF_LOG="TRACE"
-      - name: Perform Terraform Init Validate Format
+      - name: Perform Terraform Init validate Format
         id: init
         shell: bash
         run: |
+          #export TF_LOG="TRACE"
           terraform init && terraform validate && terraform fmt
+
+  terraform_plan:
+    needs: terraform_init
+    name: "Running Terraform Plan"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: List Repo Files
+        run: |
+          ls -al
+          pwd
+          free
+      - name: Perform Terraform Init & Plan
+        id: init
+        shell: bash
+        run: |
+          #export TF_LOG="TRACE"
+          terraform init && terraform plan
