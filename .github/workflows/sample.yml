@@ -63,7 +63,6 @@ jobs:
         id: init
         shell: bash
         run: |
-          #export TF_LOG="TRACE"
           terraform init && terraform validate && terraform fmt
 
   terraform_plan:
