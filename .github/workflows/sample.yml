@@ -47,23 +47,23 @@ jobs:
         shell: bash
 
   terraform_init:
-    name: "Files Check & Terraform Init & validate"
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    steps:
-       - name: Checkout
-         uses: actions/checkout@v3
-      - name: List Repo Files
-        run: |
-          ls -al 
-          pwd 
-          free
-      - name: Perform Terraform Init Validate Format
-        id: init
-        shell: bash
-        run: |
-          echo ${{ github.event.inputs.ENVIRONMENT }} 
-          echo ${{ github.event.inputs.TERRAFORM_DESTROY }} 
-          terraform init && terraform validate && terraform fmt
+  name: "Files Check & Terraform Init & Validate"
+  runs-on: ubuntu-latest
+  defaults:
+    run:
+      shell: bash
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: List Repo Files
+      run: |
+        ls -al 
+        pwd 
+        free
+    - name: Perform Terraform Init Validate Format
+      id: init
+      shell: bash
+      run: |
+        echo ${{ env.ENVIRONMENT }} 
+        echo ${{ github.event.inputs.TERRAFORM_DESTROY }} 
+        terraform init && terraform validate && terraform fmt
