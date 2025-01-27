@@ -51,3 +51,5 @@ resource "azurerm_dns_a_record" "vm6-dev" {
   records             = ["10.1.1.206"]
 }
 
+
+
